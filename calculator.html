@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Admin" content="Mahdisa Alian">
+    <meta name="email" content="alia0032@algonquinlive.com">
+    <style>
+        *, *::before, *::after{
+        box-sizing: border-box;
+        font-family:'Times New Roman', Times, serif;
+        font-weight: normal;
+        }
+
+        body{
+            padding: 0;
+            margin: 0;
+        }
+
+        .calculator_grid{
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            min-height: 100vh;
+            grid-template-columns:repeat(4,100px);
+            grid-template-rows: minmax(120px, auto) repeat(5,100px);
+        }
+
+        .calculator_grid > button{
+            font-size: 40px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        .display{
+            grid-column: 1/-1;
+            background-color: orange;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            flex-direction: column;
+            font-size: 30px;
+        }
+    </style>
+    <title>Very Simple Calculator</title>
+</head>
+<body>
+    <div class="calculator_grid">
+        <div class="display">0</div>
+        <button onclick="numbers(event)">7</button>
+        <button onclick="numbers(event)">8</button>
+        <button onclick="numbers(event)">9</button>
+        <button onclick="myFunction(event)">-</button>
+        <button onclick="numbers(event)">4</button>
+        <button onclick="numbers(event)">5</button> 
+        <button onclick="numbers(event)">6</button>
+        <button onclick="myFunction(event)">/</button>
+        <button onclick="numbers(event)">1</button>
+        <button onclick="numbers(event)">2</button>
+        <button onclick="numbers(event)">3</button>
+        <button onclick="myFunction(event)">X</button>
+        <button onclick="numbers(event)">0</button>
+        <button onclick="myFunction(event)">C</button>
+        <button onclick="myFunction(event)">=</button>
+        <button onclick="myFunction(event)">+</button>
+    </div>
+    <script>
+        let dispaly = document.querySelector('.display')
+        let answear = []
+        let finalAnswear = 0;
+        let firstDuty = ''
+        let secoundDuty = ''
+        let calculatedNumber = []
+        function numbers(event){
+            let typedNumber = event.target.textContent //get the number from what the user pushed and typed it
+            answear.push(typedNumber) // type the pushed numbers it in our empety arry called answear
+            finalAnswear = parseInt(answear.join('')) // converts all to integer and put pushed numbers next to eachother like 33
+            dispaly.innerHTML =  finalAnswear //show the results on the screen 
+        }
+        function myFunction(event){
+            let role = event.target.textContent
+            switch (role){
+                case role = '+':
+                    firstDuty = 'add'
+                    calculatedNumber.push(finalAnswear)
+                    answear = []
+                break;
+
+                case role = '-':
+                    firstDuty = 'subtract'
+                    calculatedNumber.push(finalAnswear)
+                    answear = []
+                break;
+
+                case role = 'X':
+                    firstDuty = 'multiply'
+                    calculatedNumber.push(finalAnswear)
+                    answear = []
+                break;
+
+                case role = '/':
+                    firstDuty = 'divide'
+                    calculatedNumber.push(finalAnswear)
+                    answear = []
+                break;
+
+                case role = 'C':
+                    answear = []
+                    finalAnswear = '';
+                    firstDuty = '';
+                    calculatedNumber = []
+                    dispaly.innerHTML = 0
+                break;
+
+                case role = '=':
+                    calculate (firstDuty)
+                default:
+                    break;
+            }
+            let newnswear = 0;
+            if (calculatedNumber.length > 1) {
+                if (secoundDuty == 'add') {
+                    newnswear = calculatedNumber[0] + calculatedNumber[1]
+                }else if (secoundDuty == 'subtract') {
+                    newnswear = calculatedNumber[0] - calculatedNumber[1]
+                }else if (secoundDuty == 'divide') {
+                    newnswear = (calculatedNumber[0] / calculatedNumber[1])
+                }else {
+                    newnswear = calculatedNumber[0] * calculatedNumber[1]
+                }
+                dispaly.innerText = newnswear
+                calculatedNumber = []
+                calculatedNumber.push(newnswear)
+            }
+            result = []
+            secoundDuty = firstDuty
+        }
+
+        function calculate(sign){
+            let role = ''
+            calculatedNumber.push(finalAnswear)
+            finalAnswear = 0
+            answear = []
+            if (sign == 'add') {
+                role = calculatedNumber[0] + calculatedNumber[1] 
+            } else if (sign == 'subtract') {
+                role = calculatedNumber[0] - calculatedNumber[1]
+            } else if (sign == 'divide') {
+                role = calculatedNumber[0] / calculatedNumber[1]
+            } else {
+                role = calculatedNumber[0] * calculatedNumber[1]
+            }
+            dispaly.innerHTML = role
+            calculatedNumber = []
+            calculatedNumber.push(role)
+        }
+    </script>
+</body>
+</html>
